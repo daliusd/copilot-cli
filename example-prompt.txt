@@ -1,0 +1,1 @@
+I'm working on a Node.js project. Can you explain how to implement a simple authentication middleware using Express and JWT tokens? Please include code examples.
