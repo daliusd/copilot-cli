@@ -3,6 +3,7 @@
 const { program } = require('commander');
 const { getModels, runPrompt } = require('./lib/github');
 const pkg = require('./package.json');
+const fs = require('fs');
 
 program.version(pkg.version).description('CLI tool to interact with GitHub Copilot models');
 
@@ -25,6 +26,10 @@ program
     }
   });
 
+function collectTools(value, previous) {
+  return previous.concat([value]);
+}
+
 program
   .command('chat')
   .description('Chat with a GitHub Copilot model')
@@ -33,6 +38,7 @@ program
   .option('-f, --file <file>', 'Read prompt from a file')
   .option('-s, --system <system>', 'System prompt to use')
   .option('-t, --temperature <temperature>', 'Temperature (0-2)', parseFloat, 0)
+  .option('--tool <name>', 'Enable a specific tool (fetch, editor)', collectTools, [])
   .option('--stream', 'Enable streaming response', true)
   .option('--no-stream', 'Disable streaming response')
   .action(async (options) => {
@@ -40,7 +46,6 @@ program
       let prompt = options.prompt;
 
       if (options.file) {
-        const fs = require('fs');
         prompt = fs.readFileSync(options.file, 'utf8');
       }
 
@@ -62,6 +67,7 @@ program
         messages,
         temperature: options.temperature,
         stream: options.stream,
+        tools: options.tool,
       });
     } catch (error) {
       console.error('Error running prompt:', error.message);
