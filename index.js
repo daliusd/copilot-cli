@@ -17,7 +17,7 @@ program
 
       for (const [modelId, details] of Object.entries(models)) {
         console.log(
-          `- ${modelId} (supports${details.opts?.can_stream ? ' streaming' : ''}${details.opts?.can_call_tools ? ' tools' : ''}${details.opts?.can_call_tools_parallel ? ' parallel' : ''})`,
+          `- ${modelId} (supports${details.opts?.can_call_tools ? ' tools' : ''}${details.opts?.can_call_tools_parallel ? ' parallel' : ''})`,
         );
       }
     } catch (error) {
@@ -39,8 +39,6 @@ program
   .option('-s, --system <system>', 'System prompt to use')
   .option('-t, --temperature <temperature>', 'Temperature (0-2)', parseFloat, 0)
   .option('--tool <name>', 'Enable a specific tool (fetch, editor)', collectTools, [])
-  .option('--stream', 'Enable streaming response', true)
-  .option('--no-stream', 'Disable streaming response')
   .action(async (options) => {
     try {
       let prompt = options.prompt;
@@ -66,7 +64,6 @@ program
         model: options.model,
         messages,
         temperature: options.temperature,
-        stream: options.stream,
         tools: options.tool,
       });
     } catch (error) {

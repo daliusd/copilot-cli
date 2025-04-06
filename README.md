@@ -60,12 +60,6 @@ Adjust temperature:
 ./index.js chat --model gpt-4o --prompt "Tell me a creative story" --temperature 0.8
 ```
 
-Disable streaming (wait for complete response):
-
-```bash
-./index.js chat --model gpt-4o --prompt "Explain quantum computing" --no-stream
-```
-
 ## Options
 
 ### Global Options
@@ -80,14 +74,11 @@ Disable streaming (wait for complete response):
 - `-f, --file <file>`: Read prompt from a file
 - `-s, --system <system>`: System prompt to use
 - `-t, --temperature <temperature>`: Temperature (0-2, default: 0)
-- `--stream`: Enable streaming response (default)
-- `--no-stream`: Disable streaming response
 
 ## How It Works
 
-This CLI tool authenticates with GitHub Copilot using your existing credentials, fetches available models, and allows you to run prompts against those models. It supports both streaming and non-streaming responses.
+This CLI tool authenticates with GitHub Copilot using your existing credentials, fetches available models, and allows you to run prompts against those models.
 
 ## License
 
 MIT
-
