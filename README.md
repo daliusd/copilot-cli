@@ -60,6 +60,12 @@ Adjust temperature:
 ./index.js chat --model gpt-4o --prompt "Tell me a creative story" --temperature 0.8
 ```
 
+Run prompt and pass parameters to it:
+
+```bash
+./index.js chat --model o3-mini --file ./example-prompt-2.txt -P fn=./index.js
+```
+
 ## Options
 
 ### Global Options
@@ -75,7 +81,7 @@ Adjust temperature:
 - `-s, --system <system>`: System prompt to use
 - `-t, --temperature <temperature>`: Temperature (0-2, default: 0)
 - `--tool <name>`: Enable a specific tool (fetch, editor)
-- `-P, --param <key=value>`: Parameter to replace in the prompt. Any occurrence of `{{ key }}` in the prompt (where key may contain alphanumerics, underscores, and hyphens) is replaced with the corresponding value.
+- `-P, --param <key=value>`: Parameter to replace in the prompt. Any occurrence of `{{ key }}`, `{{ key:file }}`, or `{{ key:code }}` in the prompt (where key may contain alphanumerics, underscores, and hyphens) is replaced with the corresponding value. For `:file`, the value is treated as a file path and its file content is used. For `:code`, the file content is used with each line prefixed by its line number.
 
 ## How It Works
 

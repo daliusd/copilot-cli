@@ -65,9 +65,30 @@ program
         process.exit(1);
       }
 
-      // Replace any occurrences of {{key}} in the prompt with the provided values.
+      // Replace any occurrences of {{key}}, {{key:file}}, or {{key:code}} in the prompt with the provided values.
       if (options.param) {
-        prompt = prompt.replace(/{{\s*([A-Za-z0-9_-]+)\s*}}/g, (match, key) => {
+        prompt = prompt.replace(/{{\s*([A-Za-z0-9_-]+)(?::(file|code))?\s*}}/g, (match, key, mod) => {
+          if (mod) {
+            const filePath = options.param[key];
+            if (filePath) {
+              try {
+                const fileContent = fs.readFileSync(filePath, 'utf8');
+                if (mod === 'code') {
+                  return fileContent
+                    .split('\n')
+                    .map((line, index) => `${index + 1}: ${line}`)
+                    .join('\n');
+                } else {
+                  // mod === "file"
+                  return fileContent;
+                }
+              } catch (err) {
+                console.error(`Error reading file for parameter ${key}:`, err.message);
+                process.exit(1);
+              }
+            }
+            return match;
+          }
           return Object.prototype.hasOwnProperty.call(options.param, key) ? options.param[key] : match;
         });
       }
