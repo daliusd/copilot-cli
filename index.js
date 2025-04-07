@@ -30,6 +30,18 @@ function collectTools(value, previous) {
   return previous.concat([value]);
 }
 
+// New collector function for parameters as key=value pairs.
+// Accumulates into an object.
+function collectParam(value, previous) {
+  const [key, val] = value.split('=');
+  if (!key || val === undefined) {
+    console.error('Invalid param format. Use key=value.');
+    process.exit(1);
+  }
+  previous[key] = val;
+  return previous;
+}
+
 program
   .command('chat')
   .description('Chat with a GitHub Copilot model')
@@ -39,6 +51,7 @@ program
   .option('-s, --system <system>', 'System prompt to use')
   .option('-t, --temperature <temperature>', 'Temperature (0-2)', parseFloat, 0)
   .option('--tool <name>', 'Enable a specific tool (fetch, editor)', collectTools, [])
+  .option('-P, --param <key=value>', 'Parameter to replace in the prompt', collectParam, {})
   .action(async (options) => {
     try {
       let prompt = options.prompt;
@@ -50,6 +63,14 @@ program
       if (!prompt) {
         console.error('Please provide a prompt using --prompt or --file');
         process.exit(1);
+      }
+
+      // Replace any occurrences of {{key}} in the prompt with the provided values.
+      if (options.param) {
+        for (const [key, value] of Object.entries(options.param)) {
+          const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
+          prompt = prompt.replace(regex, value);
+        }
       }
 
       const messages = [];

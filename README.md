@@ -74,6 +74,8 @@ Adjust temperature:
 - `-f, --file <file>`: Read prompt from a file
 - `-s, --system <system>`: System prompt to use
 - `-t, --temperature <temperature>`: Temperature (0-2, default: 0)
+- `--tool <name>`: Enable a specific tool (fetch, editor)
+- `-P, --param <key=value>`: Parameter to replace in the prompt
 
 ## How It Works
 
