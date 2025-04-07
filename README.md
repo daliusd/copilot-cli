@@ -75,7 +75,7 @@ Adjust temperature:
 - `-s, --system <system>`: System prompt to use
 - `-t, --temperature <temperature>`: Temperature (0-2, default: 0)
 - `--tool <name>`: Enable a specific tool (fetch, editor)
-- `-P, --param <key=value>`: Parameter to replace in the prompt
+- `-P, --param <key=value>`: Parameter to replace in the prompt. Any occurrence of `{{ key }}` in the prompt (where key may contain alphanumerics, underscores, and hyphens) is replaced with the corresponding value.
 
 ## How It Works
 

@@ -67,10 +67,9 @@ program
 
       // Replace any occurrences of {{key}} in the prompt with the provided values.
       if (options.param) {
-        for (const [key, value] of Object.entries(options.param)) {
-          const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
-          prompt = prompt.replace(regex, value);
-        }
+        prompt = prompt.replace(/{{\s*([A-Za-z0-9_-]+)\s*}}/g, (match, key) => {
+          return Object.prototype.hasOwnProperty.call(options.param, key) ? options.param[key] : match;
+        });
       }
 
       const messages = [];
