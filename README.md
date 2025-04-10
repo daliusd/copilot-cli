@@ -69,7 +69,7 @@ Run prompt and pass parameters to it:
 Run prompt and pass parameters to it:
 
 ```bash
-copilot chat --model o3-mini --tool editor --file ./example-prompt-2.txt -P fn=./index.js
+copilot chat --model o3-mini --tool editor --file ./example-prompt-3.txt -P fn=./index.js
 ```
 
 ## Options
