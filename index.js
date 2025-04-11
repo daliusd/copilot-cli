@@ -16,9 +16,10 @@ program
       console.log('Available models:');
 
       for (const [modelId, details] of Object.entries(models)) {
-        console.log(
-          `- ${modelId} (supports${details.opts?.can_call_tools ? ' tools' : ''}${details.opts?.can_call_tools_parallel ? ' parallel' : ''})`,
-        );
+        const supports = [];
+        if (details.opts?.can_call_tools) supports.push('tools');
+        if (details.opts?.can_call_tools_parallel) supports.push('parallel');
+        console.log(`- ${modelId} (supports ${supports.length ? supports.join(", ") : 'none'})`);
       }
     } catch (error) {
       console.error('Error fetching models:', error.message);
