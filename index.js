@@ -19,7 +19,7 @@ program
         const supports = [];
         if (details.opts?.can_call_tools) supports.push('tools');
         if (details.opts?.can_call_tools_parallel) supports.push('parallel');
-        console.log(`- ${modelId} (supports ${supports.length ? supports.join(", ") : 'none'})`);
+        console.log(`- ${modelId} (supports ${supports.length ? supports.join(', ') : 'none'})`);
       }
     } catch (error) {
       console.error('Error fetching models:', error.message);
@@ -53,6 +53,7 @@ program
   .option('-t, --temperature <temperature>', 'Temperature (0-2)', parseFloat, 0)
   .option('--tool <name>', 'Enable a specific tool (fetch, editor)', collectTools, [])
   .option('-P, --param <key=value>', 'Parameter to replace in the prompt', collectParam, {})
+  .option('-x, --xml', 'Enable XML tools', false)
   .action(async (options) => {
     try {
       let prompt = options.prompt;
@@ -107,6 +108,7 @@ program
         messages,
         temperature: options.temperature,
         tools: options.tool,
+        xmlTools: options.xml,
       });
     } catch (error) {
       console.error('Error running prompt:', error.message);
