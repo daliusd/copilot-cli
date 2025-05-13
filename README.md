@@ -1,3 +1,5 @@
+**NOTE: project canceled because same can be done using Aider https://aider.chat/docs/scripting.html**
+
 # GitHub Models CLI
 
 A command-line interface tool to interact with GitHub Copilot models. This tool allows you to list available models and run prompts against them.
